@@ -6492,6 +6492,7 @@ int perf_pmu_register(struct pmu *pmu, char *name, int type)
 	}
 
 skip_type:
+
 	pmu->pmu_cpu_context = find_pmu_context(pmu->task_ctx_nr);
 	if (pmu->pmu_cpu_context)
 		goto got_cpu_context;
