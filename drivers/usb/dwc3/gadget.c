@@ -354,10 +354,15 @@ int dwc3_send_gadget_ep_cmd(struct dwc3 *dwc, unsigned ep,
 		if (!(reg & DWC3_DEPCMD_CMDACT)) {
 			dev_vdbg(dwc->dev, "Command Complete --> %d\n",
 					DWC3_DEPCMD_STATUS(reg));
-			if (reg & 0x2000)
+			if (reg & 0x2000) {
 				ret = -EAGAIN;
-			else
+			}
+			else if (DWC3_DEPCMD_STATUS(reg)) {
+				return -EINVAL;
+			}
+			else {
 				ret = 0;
+			}
 			break;
 		}
 
