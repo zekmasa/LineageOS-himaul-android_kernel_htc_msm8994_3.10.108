@@ -2419,6 +2419,7 @@ static unsigned int unix_dgram_poll(struct file *file, struct socket *sock,
 			writable = 0;
 
 		unix_state_unlock(sk);
+
 	}
 
 	if (writable)
