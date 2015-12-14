@@ -125,7 +125,6 @@ static int inet6_create(struct net *net, struct socket *sock, int protocol,
 
 	if (protocol < 0 || protocol >= IPPROTO_MAX)
 		return -EINVAL;
-
 	if (!current_has_network())
 		return -EACCES;
 
