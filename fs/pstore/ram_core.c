@@ -287,6 +287,7 @@ void persistent_ram_save_old(struct persistent_ram_zone *prz)
 	}
 
 	prz->old_log_size = size;
+
 	memcpy_fromio(prz->old_log, &buffer->data[start], size - start);
 	memcpy_fromio(prz->old_log + size - start, &buffer->data[0], start);
 }
