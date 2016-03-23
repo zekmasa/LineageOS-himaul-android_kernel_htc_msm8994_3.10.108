@@ -2236,6 +2236,8 @@ int ppp_register_net_channel(struct net *net, struct ppp_channel *chan)
 	list_add(&pch->list, &pn->new_channels);
 	atomic_inc(&channel_count);
 	spin_unlock_bh(&pn->all_channels_lock);
+	put_net(pch->chan_net);
+	pch->chan_net = NULL;
 
 	return 0;
 }
