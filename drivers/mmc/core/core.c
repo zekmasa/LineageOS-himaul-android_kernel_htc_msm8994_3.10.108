@@ -1448,7 +1448,7 @@ void mmc_set_data_timeout(struct mmc_data *data, const struct mmc_card *card)
 		return;
 	}
 	if (mmc_card_sdio(card)) {
-		data->timeout_ns = 1000000000;
+		data->timeout_ns = 600000000;
 		data->timeout_clks = 0;
 		return;
 	}

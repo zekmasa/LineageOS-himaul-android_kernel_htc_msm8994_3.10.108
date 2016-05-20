@@ -3442,6 +3442,8 @@ static const struct mmc_fixup blk_fixups[] =
 	
 	MMC_FIXUP("SEM04G", 0x45, CID_OEMID_ANY, add_quirk_mmc,
 		  MMC_QUIRK_INAND_DATA_TIMEOUT),
+        MMC_FIXUP("008GE0", CID_MANFID_TOSHIBA, CID_OEMID_ANY, add_quirk_mmc,
+                  MMC_QUIRK_LONG_READ_TIME),
 
 	END_FIXUP
 };
