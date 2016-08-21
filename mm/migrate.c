@@ -250,7 +250,15 @@ static inline bool buffer_migrate_lock_buffers(struct buffer_head *head,
 }
 #endif 
 
-static int migrate_page_move_mapping(struct address_space *mapping,
+/*
+ * Replace the page in the mapping.
+ *
+ * The number of remaining references must be:
+ * 1 for anonymous pages without a mapping
+ * 2 for pages with a mapping
+ * 3 for pages with a mapping and PagePrivate/PagePrivate2 set.
+ */
+int migrate_page_move_mapping(struct address_space *mapping,
 		struct page *newpage, struct page *page,
 		struct buffer_head *head, enum migrate_mode mode)
 {
