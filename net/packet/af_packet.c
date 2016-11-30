@@ -3743,6 +3743,7 @@ static int packet_set_ring(struct sock *sk, union tpacket_req_u *req_u,
 	if (pg_vec)
 		free_pg_vec(pg_vec, order, req->tp_block_nr);
 out:
+
 	release_sock(sk);
 	return err;
 }
