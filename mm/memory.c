@@ -1353,12 +1353,6 @@ no_page_table:
 	return page;
 }
 
-static inline int stack_guard_page(struct vm_area_struct *vma, unsigned long addr)
-{
-	return stack_guard_page_start(vma, addr) ||
-	       stack_guard_page_end(vma, addr+PAGE_SIZE);
-}
-
 /**
  * __get_user_pages() - pin user pages in memory
  * @tsk:	task_struct of target task
@@ -1522,11 +1516,6 @@ long __get_user_pages(struct task_struct *tsk, struct mm_struct *mm,
 				int ret;
 				unsigned int fault_flags = 0;
 
-				
-				if (foll_flags & FOLL_MLOCK) {
-					if (stack_guard_page(vma, start))
-						goto next_page;
-				}
 				if (foll_flags & FOLL_WRITE)
 					fault_flags |= FAULT_FLAG_WRITE;
 				if (nonblocking)
@@ -2549,6 +2538,11 @@ static inline int check_stack_guard_page(struct vm_area_struct *vma, unsigned lo
 	return 0;
 }
 
+/*
+ * We enter with non-exclusive mmap_sem (to exclude vma changes,
+ * but allow concurrent faults), and pte mapped but not yet locked.
+ * We return with mmap_sem still held, but pte unmapped and unlocked.
+ */
 static int do_anonymous_page(struct mm_struct *mm, struct vm_area_struct *vma,
 		unsigned long address, pte_t *page_table, pmd_t *pmd,
 		unsigned int flags)
@@ -2563,11 +2557,7 @@ static int do_anonymous_page(struct mm_struct *mm, struct vm_area_struct *vma,
 	if (vma->vm_flags & VM_SHARED)
 		return VM_FAULT_SIGBUS;
 
-	/* Check if we need to add a guard page to the stack */
-	if (check_stack_guard_page(vma, address) < 0)
-		return VM_FAULT_SIGSEGV;
-
-	
+	/* Use the zero-page for reads */
 	if (!(flags & FAULT_FLAG_WRITE)) {
 		entry = pte_mkspecial(pfn_pte(my_zero_pfn(address),
 						vma->vm_page_prot));
