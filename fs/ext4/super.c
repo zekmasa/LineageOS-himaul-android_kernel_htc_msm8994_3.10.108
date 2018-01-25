@@ -381,13 +381,13 @@ static void ext4_journal_commit_callback(journal_t *journal, transaction_t *txn)
 }
 
 #ifdef CONFIG_EXT4_E2FSCK_RECOVER
+#if 0
 static void ext4_reboot(struct work_struct *work)
 {
 	printk(KERN_ERR "%s: reboot to run e2fsck\n", __func__);
 	kernel_restart("oem-22");
 }
 
-#if 0
 static void ext4_e2fsck(struct super_block *sb)
 {
 	static int reboot;
