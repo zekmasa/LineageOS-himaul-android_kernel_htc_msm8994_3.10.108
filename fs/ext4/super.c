@@ -387,6 +387,7 @@ static void ext4_reboot(struct work_struct *work)
 	kernel_restart("oem-22");
 }
 
+#if 0
 static void ext4_e2fsck(struct super_block *sb)
 {
 	static int reboot;
@@ -414,6 +415,7 @@ static void ext4_e2fsck(struct super_block *sb)
 
 	queue_work(wq, &sb_info->reboot_work);
 }
+#endif
 #endif
 
 /* Deal with the reporting of failure conditions on a filesystem such as
