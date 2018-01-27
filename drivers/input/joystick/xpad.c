@@ -1124,7 +1124,7 @@ static int xpad_init_input(struct usb_xpad *xpad)
 	xpad->dev = input_dev;
 	input_dev->name = xpad->name;
 	input_dev->phys = xpad->phys;
-	usb_to_input_id(udev, &input_dev->id);
+	usb_to_input_id(xpad->udev, &input_dev->id);
 
 	if (xpad->xtype == XTYPE_XBOX360W) {
 		/* x360w controllers and the receiver have different ids */
