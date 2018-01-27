@@ -1131,7 +1131,7 @@ static int xpad_init_input(struct usb_xpad *xpad)
 		input_dev->id.product = 0x02a1;
 	}
 
-	input_dev->dev.parent = &intf->dev;
+	input_dev->dev.parent = &xpad->intf->dev;
 
 	input_set_drvdata(input_dev, xpad);
 
