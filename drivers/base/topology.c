@@ -189,7 +189,7 @@ static int __cpuinit topology_sysfs_init(void)
 		if (rc)
 			goto out;
 	}
-	hotcpu_notifier(topology_cpu_callback, 0);
+	__hotcpu_notifier(topology_cpu_callback, 0);
 
 out:
 	cpu_notifier_register_done();
