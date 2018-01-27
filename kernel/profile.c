@@ -608,7 +608,7 @@ int __ref create_proc_profile(void) /* false positive from hotcpu_notifier */
 	if (!entry)
 		goto out;
 	proc_set_size(entry, (1 + prof_len) * sizeof(atomic_t));
-	__hotcpu_notifier(profile_cpu_callback, 0);
+	hotcpu_notifier(profile_cpu_callback, 0);
 
 out:
 	cpu_notifier_register_done();
