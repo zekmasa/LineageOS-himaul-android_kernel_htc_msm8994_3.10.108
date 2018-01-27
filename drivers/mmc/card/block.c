@@ -2369,8 +2369,8 @@ static void mmc_blk_packed_hdr_wrq_prep(struct mmc_queue_req *mqrq,
 		
 		packed_cmd_hdr[((i * 2)) + 1] = cpu_to_le32(
 			mmc_card_blockaddr(card) ?
-			blk_rq_pos(prq) : blk_rq_pos(prq) << 9;
-		packed->blocks += blk_rq_sectors(prq));
+			blk_rq_pos(prq) : blk_rq_pos(prq) << 9);
+		packed->blocks += blk_rq_sectors(prq);
 		i++;
 	}
 
