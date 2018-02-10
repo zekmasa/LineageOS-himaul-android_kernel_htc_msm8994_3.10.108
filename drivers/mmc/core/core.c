@@ -859,13 +859,10 @@ EXPORT_SYMBOL(mmc_start_bkops);
 
 static void mmc_wait_data_done(struct mmc_request *mrq)
 {
-	unsigned long flags;
 	struct mmc_context_info *context_info = &mrq->host->context_info;
 
-	spin_lock_irqsave(&context_info->lock, flags);
-	mrq->host->context_info.is_done_rcv = true;
-	wake_up_interruptible(&mrq->host->context_info.wait);
-	spin_unlock_irqrestore(&context_info->lock, flags);
+	context_info->is_done_rcv = true;
+	wake_up_interruptible(&context_info->wait);
 }
 
 void mmc_start_idle_time_bkops(struct work_struct *work)
@@ -1451,7 +1448,7 @@ void mmc_set_data_timeout(struct mmc_data *data, const struct mmc_card *card)
 		return;
 	}
 	if (mmc_card_sdio(card)) {
-		data->timeout_ns = 1000000000;
+		data->timeout_ns = 600000000;
 		data->timeout_clks = 0;
 		return;
 	}

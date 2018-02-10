@@ -440,6 +440,7 @@ struct perf_event {
 #endif /* CONFIG_PERF_EVENTS */
 };
 
+
 /**
  * struct perf_event_context - event context structure
  *
